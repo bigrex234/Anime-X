@@ -10,7 +10,7 @@ function card(item, library=false) {
   const id = item.anime_id || item.id;
   const title = item.title || "Anime";
   return `<article class="anime-card">
-    <a href="/anime/${encodeURIComponent(id)}"><div class="poster-wrap"><img loading="lazy" src="${esc(img)}" alt="${esc(title)}"><span class="score">${library ? esc(item.status.replaceAll("_"," ")) : "RECENT"}</span></div><div class="card-title">${esc(title)}</div><div class="card-sub">${library ? `Episode progress: ${item.progress || 0}` : "Recently viewed"}</div></a>
+    <a href="/anime/${encodeURIComponent(id)}"><div class="poster-wrap"><img loading="lazy" src="${esc(img)}" alt="${esc(title)}"><span class="score">${library ? esc(String(item.status || "saved").replaceAll("_"," ")) : "RECENT"}</span></div><div class="card-title">${esc(title)}</div><div class="card-sub">${library ? `Episode progress: ${item.progress || 0}` : "Recently viewed"}</div></a>
     ${library ? `<button class="remove-library" data-remove="${id}">Remove from library</button>` : ""}
   </article>`;
 }
