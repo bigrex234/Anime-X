@@ -94,3 +94,4 @@ vercel --prod
 
 ## Important Vercel deployment note
 The Flask app is compatible with Vercel's Python runtime. Vercel is serverless: local filesystem writes are ephemeral, so user data belongs in Supabase, not SQLite or local files.
+Deployment update - AnimeX production release.
