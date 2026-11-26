@@ -3,6 +3,7 @@ const statusBox = document.getElementById("status");
 const title = document.getElementById("results-title");
 const loadMore = document.getElementById("load-more");
 let currentCollection = "trending", currentGenre = "", currentPage = 1, searchMode = false;
+let activeRequest = 0;
 
 function esc(value="") {
   return String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -28,14 +29,16 @@ async function fetchJson(url) {
   return data;
 }
 async function loadCollection(append=false) {
+  const requestId = ++activeRequest;
   if (!append) { currentPage = 1; statusBox.textContent = "Loading your anime universe..."; loadMore.hidden = true; }
   try {
     const url = `/api/anime/${currentCollection}?page=${currentPage}${currentGenre ? `&genre=${encodeURIComponent(currentGenre)}` : ""}`;
     const data = await fetchJson(url);
+    if (requestId !== activeRequest) return;
     render(data.results, append);
     statusBox.textContent = data.results.length ? "" : "No anime found in this collection.";
     loadMore.hidden = data.results.length < 18;
-  } catch (error) { statusBox.textContent = `${error.message} Please try again.`; }
+  } catch (error) { if (requestId === activeRequest) statusBox.textContent = `${error.message} Please try again.`; }
 }
 function setTitle() {
   const names = {"trending":"Trending","popular":"Popular","top-rated":"Top rated","upcoming":"Upcoming"};
@@ -60,11 +63,13 @@ document.getElementById("search-form").addEventListener("submit", async event =>
   const query = document.getElementById("search-input").value.trim();
   if (!query) return;
   searchMode = true; currentPage = 1; currentGenre = "";
+  const requestId = ++activeRequest;
   title.innerHTML = `Search <span>results</span>`; statusBox.textContent = `Searching for "${esc(query)}"...`; grid.innerHTML = ""; loadMore.hidden = true;
   try {
     const data = await fetchJson(`/api/anime/search?q=${encodeURIComponent(query)}&page=1`);
+    if (requestId !== activeRequest) return;
     render(data.results); statusBox.textContent = `${data.results.length} results from ${data.provider}.`;
-  } catch (error) { statusBox.textContent = error.message; }
+  } catch (error) { if (requestId === activeRequest) statusBox.textContent = error.message; }
 });
 loadMore.addEventListener("click", () => { if (searchMode) return; currentPage += 1; loadCollection(true); });
 loadCollection();
@@ -77,4 +82,19 @@ loadCollection();
     const session = await auth.session();
     if (session) { nav.href = "/library"; nav.textContent = "My library"; }
   }
+})();
+
+
+// Compact mobile navigation with accessible open/close state.
+(() => {
+  const toggle = document.getElementById("mobile-menu");
+  const menu = document.getElementById("mobile-nav");
+  if (!toggle || !menu) return;
+  const close = () => { menu.hidden = true; toggle.setAttribute("aria-expanded", "false"); toggle.textContent = "☰"; };
+  toggle.addEventListener("click", () => {
+    const opening = menu.hidden; menu.hidden = !opening;
+    toggle.setAttribute("aria-expanded", String(opening)); toggle.textContent = opening ? "×" : "☰";
+  });
+  menu.addEventListener("click", event => { if (event.target.closest("a")) close(); });
+  document.addEventListener("keydown", event => { if (event.key === "Escape") close(); });
 })();
