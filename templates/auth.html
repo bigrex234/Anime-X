@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#090910">
+<title>{{ app_name }} — Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head><body class="auth-page">
+<div class="ambient ambient-one"></div><main class="auth-shell">
+<a class="brand" href="/"><span class="brand-mark">X</span><span>ANIME<span class="brand-accent">X</span></span></a>
+<section class="auth-card">
+<div class="eyebrow">YOUR ANIME UNIVERSE</div><h1 id="auth-title">Welcome back.</h1><p class="auth-subtitle" id="auth-subtitle">Sign in to continue your anime journey.</p>
+<div class="auth-tabs"><button class="auth-tab active" data-mode="signin">Sign in</button><button class="auth-tab" data-mode="signup">Create account</button></div>
+<form id="auth-form">
+<label>Email address<input id="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+<label>Password<input id="password" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"></label>
+<button class="primary-btn auth-submit" id="auth-submit" type="submit">Sign in <span>→</span></button>
+</form>
+<p class="auth-message" id="auth-message" role="status"></p>
+<p class="auth-footnote">By creating an account, you agree to use AnimeX responsibly. Your library is private to your account.</p>
+</section><a class="back-home" href="/">← Back to AnimeX</a>
+</main>
+<script>window.ANIMEX_CONFIG = {{ {"supabaseUrl": supabase_url, "supabaseAnonKey": supabase_anon_key}|tojson }};</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="{{ url_for('static', filename='js/auth-client.js') }}"></script>
+<script src="{{ url_for('static', filename='js/auth-page.js') }}"></script>
+</body></html>

@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#090910">
+<title>{{ app_name }} — My library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></head>
+<body><header class="topbar"><a class="brand" href="/"><span class="brand-mark">X</span><span>ANIME<span class="brand-accent">X</span></span></a><nav class="desktop-nav"><a href="/">Discover</a><a class="active" href="/library">My library</a></nav><button class="auth-nav" id="signout-button">Sign out</button></header>
+<main class="section library-main"><div class="section-heading"><div><div class="eyebrow">YOUR PERSONAL COLLECTION</div><h2>My <span>library</span></h2></div><div class="section-note" id="library-user"></div></div>
+<div class="library-tabs"><button class="tab active" data-filter="all">All</button><button class="tab" data-filter="watching">Watching</button><button class="tab" data-filter="completed">Completed</button><button class="tab" data-filter="plan_to_watch">Plan to watch</button><button class="tab" data-filter="favorites">Favourites</button></div>
+<div id="library-status" class="status">Loading your library...</div><div id="library-grid" class="anime-grid"></div>
+<div class="section-heading recent-heading"><div><div class="eyebrow">PICK UP WHERE YOU LEFT OFF</div><h2>Recently <span>viewed</span></h2></div></div>
+<div id="recent-status" class="status"></div><div id="recent-grid" class="anime-grid"></div></main>
+<footer><a class="brand" href="/"><span class="brand-mark">X</span><span>ANIME<span class="brand-accent">X</span></span></a><span>AnimeX · Your collection, everywhere.</span><span class="footer-status">MY LIBRARY</span></footer>
+<script>window.ANIMEX_CONFIG = {{ {"supabaseUrl": supabase_url, "supabaseAnonKey": supabase_anon_key}|tojson }};</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="{{ url_for('static', filename='js/auth-client.js') }}"></script><script src="{{ url_for('static', filename='js/library.js') }}"></script>
+</body></html>
