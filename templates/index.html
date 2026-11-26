@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#090910"><meta name="description" content="AnimeX — discover your next anime obsession.">
+  <meta name="theme-color" content="#090910"><meta name="color-scheme" content="dark"><link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}"><meta name="description" content="AnimeX — discover your next anime obsession.">
   <title>{{ app_name }} — Anime, reimagined</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -14,18 +14,19 @@
     <a class="brand" href="/"><span class="brand-mark">X</span><span>ANIME<span class="brand-accent">X</span></span></a>
     <nav class="desktop-nav"><a class="active" href="/">Discover</a><a href="#trending">Trending</a><a href="#genres">Genres</a><a href="#about">About</a><a href="/library" id="library-nav">My library</a></nav>
     <form class="search" id="search-form"><span>⌕</span><input id="search-input" type="search" placeholder="Search anime..." autocomplete="off"><kbd>ENTER</kbd></form>
-    <a class="auth-nav" id="auth-nav" href="/login">Sign in</a><button class="mobile-menu" id="mobile-menu" aria-label="Open menu">☰</button>
+    <a class="auth-nav" id="auth-nav" href="/login">Sign in</a><button class="mobile-menu" id="mobile-menu" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav">☰</button>
   </header>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden><a href="/">Discover</a><a href="#trending">Trending</a><a href="#genres">Genres</a><a href="/library">My library</a></nav>
   <main>
     <section class="hero" id="hero">
       <div class="hero-copy">
-        <div class="eyebrow"><span class="pulse"></span> YOUR NEXT OBSESSION STARTS HERE</div>
-        <h1>Enter a world<br> beyond <span>imagination.</span></h1>
-        <p>Discover legendary stories, hidden gems and the next anime you'll never forget.</p>
+        <div class="eyebrow"><span class="pulse"></span> THE ANIME UNIVERSE, UNLOCKED</div>
+        <h1>Find your next<br> <span>main character</span><br>moment.</h1>
+        <p>From all-time legends to slept-on gems. Explore the stories, worlds and characters you will not stop thinking about.</p>
         <div class="hero-actions"><a class="primary-btn" href="#trending">Explore anime <span>↗</span></a><a class="text-btn" href="#about">How it works <span>→</span></a></div>
-        <div class="hero-meta"><div><strong>ANIME</strong><small>Stories without limits</small></div><i></i><div><strong>ONE X</strong><small>Universe to explore</small></div></div>
+        <div class="hero-meta"><div><strong>INFINITE WORLDS</strong><small>One universe, endless stories</small></div><i></i><div><strong>YOUR LIST</strong><small>Your watch journey, saved</small></div></div>
       </div>
-      <div class="hero-art"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="hero-x">X</div><div class="hero-caption"><span>ANIMEX / DISCOVER</span><span>YOUR UNIVERSE AWAITS</span></div></div>
+      <div class="hero-art"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="hero-x">X</div><div class="hero-orb orb-one"></div><div class="hero-orb orb-two"></div><div class="hero-stamp"><span>AX</span><small>DISCOVER<br>WITHOUT LIMITS</small></div><div class="hero-caption"><span>ANIMEX / DISCOVER</span><span>NO SKIPS. JUST PEAK.</span></div></div>
     </section>
 
     <section class="section" id="genres">
@@ -40,7 +41,7 @@
     </section>
 
     <section class="section collection-section" id="trending">
-      <div class="section-heading"><div><div class="eyebrow">CURATED FOR YOU</div><h2 id="results-title">Trending <span>now</span></h2></div><div class="section-note">LIVE FROM ANILIST <span class="live-dot"></span></div></div>
+      <div class="section-heading"><div><div class="eyebrow">CURATED FOR YOU</div><h2 id="results-title">Trending <span>now</span></h2></div><div class="section-note">LIVE ANIME DATA <span class="live-dot"></span></div></div>
       <div class="tabs" id="collection-tabs">
         <button class="tab active" data-collection="trending">Trending</button><button class="tab" data-collection="popular">Popular</button>
         <button class="tab" data-collection="top-rated">Top rated</button><button class="tab" data-collection="upcoming">Upcoming</button>
@@ -48,7 +49,7 @@
       <div id="status" class="status">Loading your anime universe...</div><div id="anime-grid" class="anime-grid"></div>
       <div class="pagination"><button id="load-more" class="outline-btn" hidden>Load more anime <span>↓</span></button></div>
     </section>
-    <section class="about" id="about"><div class="about-symbol">X</div><div><div class="eyebrow">BUILT FOR ANIME FANS</div><h2>One place. Infinite <span>worlds.</span></h2><p>AnimeX brings anime discovery into one clean experience. Find shows, explore details and build your watchlist. Streaming and permitted offline features are coming in future stages.</p></div></section>
+    <section class="about" id="about"><div class="about-symbol">X</div><div><div class="eyebrow">MADE FOR THE OBSESSED</div><h2>Your next obsession is <span>one click away.</span></h2><p>Discover what is worth watching, dive into the details and keep your personal watchlist close. AnimeX is your home base for the next great story.</p><div class="about-tags"><span>DISCOVER</span><span>TRACK</span><span>REPEAT</span></div></div></section>
   </main>
   <footer><a class="brand" href="/"><span class="brand-mark">X</span><span>ANIME<span class="brand-accent">X</span></span></a><span>AnimeX · Discover beyond the ordinary.</span><span class="footer-status">STAGE 2 / DISCOVERY</span></footer>
   <script>
