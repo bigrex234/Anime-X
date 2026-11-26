@@ -95,3 +95,14 @@ vercel --prod
 ## Important Vercel deployment note
 The Flask app is compatible with Vercel's Python runtime. Vercel is serverless: local filesystem writes are ephemeral, so user data belongs in Supabase, not SQLite or local files.
 Deployment update - AnimeX production release.
+
+## AnimeX After Dark visual refresh
+
+This refresh keeps the existing Flask API, AniList metadata flow, Supabase authentication, watchlist schema, and Vercel deployment setup intact while upgrading the presentation:
+- New cinematic dark-purple visual system with a subtle grid, glass navigation, neon accents, and richer poster hover states.
+- Reworked landing-page hero copy and brand artwork.
+- Responsive mobile navigation with Escape-to-close and accessible expanded-state handling.
+- Search/collection request sequencing so slower earlier responses do not overwrite newer selections.
+- Branded SVG favicon and dark browser color-scheme hints across the main pages.
+
+No database migration or new environment variables are required for this visual update.
