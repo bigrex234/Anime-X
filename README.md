@@ -106,3 +106,40 @@ This refresh keeps the existing Flask API, AniList metadata flow, Supabase authe
 - Branded SVG favicon and dark browser color-scheme hints across the main pages.
 
 No database migration or new environment variables are required for this visual update.
+
+
+## Backend V2 hardening (2026-11)
+
+This update preserves the existing page routes, JSON response shapes, AniList/Jikan provider interfaces, Supabase tables, and frontend integration. It replaces the backend internals with:
+
+- Supabase Auth verification through the documented `/auth/v1/user` endpoint (the previous code referenced an undefined `create_client`, which could make every authenticated request fail).
+- RLS-preserving PostgREST calls made with the signed-in user's access token; no service-role key is needed for user libraries.
+- Bounded HTTP connect/read timeouts and retrying pooled sessions for metadata providers.
+- API rate limits through Flask-Limiter. For production/serverless, configure `RATELIMIT_STORAGE_URI` to a shared Redis-compatible store such as Upstash; `memory://` is development-only and resets per instance.
+- Safer request validation, bounded library reads, non-leaking database errors, request-size limits, and security headers.
+- Public caching only for public metadata; account/library endpoints remain `no-store`.
+
+### Backend V2 installation
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+cp .env.example .env
+python app.py
+```
+
+Set `SUPABASE_URL` and `SUPABASE_ANON_KEY` in `.env`. `SUPABASE_SERVICE_ROLE_KEY` is intentionally not required. Keep `FLASK_DEBUG=false` in production and set a long random `SECRET_KEY`.
+
+### Vercel environment additions
+
+Set `RATELIMIT_STORAGE_URI` to your Redis/Upstash Redis connection URL to make rate limits consistent across serverless instances. If not configured, AnimeX uses in-memory rate limits which are best-effort only on Vercel. Never prefix the Redis URL or Supabase secrets with `NEXT_PUBLIC_` or expose them to frontend JavaScript.
+
+### Tests
+
+```bash
+python -m pytest -q
+```
+
+The new tests cover health/security headers, missing authentication, and invalid library payloads. A full live integration test still requires valid Supabase and AniList credentials/network access.
